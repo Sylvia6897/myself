@@ -18,6 +18,10 @@ if (!DEEPSEEK_API_KEY) {
   console.error('或在 .env 文件中配置后使用 npm start 启动');
   process.exit(1);
 }
+// 新增：解决 Cannot GET / 报错
+app.get('/', (req, res) => {
+  res.send('✅ 小崔AI后端运行正常！DeepSeek已就绪~');
+});
 
 // ============================================================
 // 系统提示词 — 小崔 AI 分身
