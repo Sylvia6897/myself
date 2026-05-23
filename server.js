@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // 尝试加载 .env 文件（本地开发用），生产环境通过平台设置环境变量
 try {
@@ -18,11 +20,6 @@ if (!DEEPSEEK_API_KEY) {
   console.error('或在 .env 文件中配置后使用 npm start 启动');
   process.exit(1);
 }
-// 新增：解决 Cannot GET / 报错
-app.get('/', (req, res) => {
-  res.send('✅ 小崔AI后端运行正常！DeepSeek已就绪~');
-});
-
 // ============================================================
 // 系统提示词 — 小崔 AI 分身
 // 提示词完全存放在后端，前端无法获取
@@ -378,8 +375,7 @@ const SYSTEM_PROMPT = `# 小崔
    - 保持你的"棱角"——正是这些不完美让你真实
    - 不要变成"人生导师"模式，除非那就是你的风格`;
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+
 
 // ---------- 中间件 ----------
 
@@ -401,6 +397,9 @@ app.use('/chat', limiter);
 
 // ---------- 静态文件服务 ----------
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => {
+  res.send('✅ 小崔AI后端运行正常！DeepSeek已就绪~');
+});
 
 // ---------- API 接口 ----------
 
