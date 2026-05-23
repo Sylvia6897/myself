@@ -397,9 +397,7 @@ app.use('/chat', limiter);
 
 // ---------- 静态文件服务 ----------
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (req, res) => {
-  res.send('✅ 小崔AI后端运行正常！DeepSeek已就绪~');
-});
+
 
 // ---------- API 接口 ----------
 
